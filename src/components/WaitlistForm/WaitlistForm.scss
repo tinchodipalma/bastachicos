@@ -1,0 +1,94 @@
+@use "sass:color";
+@use "../../styles/variables" as *;
+
+.waitlist-form {
+  background-color: rgba($color-background, 0.9);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid $color-primary;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba($color-primary, 0.2);
+
+  &__title {
+    color: $color-primary;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__group {
+    margin-bottom: 1rem;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $color-text-light;
+    font-size: 0.9rem;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: $color-text-light;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+
+    &::placeholder {
+      color: rgba($color-text-light, 0.5);
+    }
+  }
+
+  &__button {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: $color-primary;
+    color: $color-text-dark;
+    border: none;
+    padding: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: color.adjust($color-primary, $lightness: 10%);
+    }
+
+    &:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  }
+
+  &__message {
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9rem;
+
+    &--success {
+      background-color: rgba($color-success, 0.2);
+      color: $color-success;
+      border: 1px solid $color-success;
+    }
+
+    &--error {
+      background-color: rgba($color-error, 0.2);
+      color: $color-error;
+      border: 1px solid $color-error;
+    }
+  }
+}

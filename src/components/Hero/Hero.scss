@@ -1,0 +1,25 @@
+@use "../../styles/variables" as *;
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+
+  &__image {
+    max-width: 100%;
+    height: auto;
+    max-height: 300px; // Adjust as needed
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 10px rgba($color-primary, 0.5));
+  }
+
+  &__title {
+    color: $color-primary;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+}
