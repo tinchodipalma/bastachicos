@@ -145,6 +145,13 @@
       border: 1px solid $color-error;
     }
   }
+
+  &__honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .PoweredBy {

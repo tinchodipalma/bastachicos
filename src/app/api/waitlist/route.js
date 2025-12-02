@@ -8,7 +8,15 @@ export async function POST(request) {
     await dbConnect();
 
     const body = await request.json();
-    const { name, lastName, idNumber, birthDate, email, phone } = body;
+    const { name, lastName, idNumber, birthDate, email, phone, botField } =
+      body;
+
+    if (botField && botField.trim().length > 0) {
+      return NextResponse.json(
+        { success: false, message: "Request blocked" },
+        { status: 400 }
+      );
+    }
 
     // Basic validation
     if (!name || !lastName || !idNumber || !birthDate || !email || !phone) {

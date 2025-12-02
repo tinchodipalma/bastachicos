@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./WaitlistForm.scss";
 
 export default function WaitlistForm() {
@@ -12,10 +12,24 @@ export default function WaitlistForm() {
     email: "",
     emailConfirm: "",
     phone: "",
+    botField: "",
   });
 
   const [status, setStatus] = useState("idle"); // idle, loading, success, error
   const [message, setMessage] = useState("");
+  const [registered, setRegistered] = useState(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const alreadyRegistered = localStorage.getItem("waitlistRegistered");
+    if (alreadyRegistered === "true") {
+      setRegistered(true);
+      setStatus("success");
+      setMessage("Ya estás registrado.");
+    } else {
+      setRegistered(false);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +41,12 @@ export default function WaitlistForm() {
     setStatus("loading");
     setMessage("");
 
+    if (formData.botField.trim().length > 0) {
+      setStatus("error");
+      setMessage("No se pudo procesar la solicitud.");
+      return;
+    }
+
     if (formData.email !== formData.emailConfirm) {
       setStatus("error");
       setMessage("Los correos electrónicos no coinciden.");
@@ -34,13 +54,13 @@ export default function WaitlistForm() {
     }
 
     try {
-      const { ...payload } = formData;
+      const { botField, ...payload } = formData;
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, botField }),
       });
 
       const data = await res.json();
@@ -51,6 +71,10 @@ export default function WaitlistForm() {
 
       setStatus("success");
       setMessage("¡Te has registrado correctamente en la lista de espera!");
+      if (typeof window !== "undefined") {
+        localStorage.setItem("waitlistRegistered", "true");
+      }
+      setRegistered(true);
       setFormData({
         name: "",
         lastName: "",
@@ -59,12 +83,17 @@ export default function WaitlistForm() {
         email: "",
         emailConfirm: "",
         phone: "",
+        botField: "",
       });
     } catch (error) {
       setStatus("error");
       setMessage(error.message);
     }
   };
+
+  if (registered === null) {
+    return null;
+  }
 
   return (
     <div className="waitlist-form">
@@ -74,7 +103,7 @@ export default function WaitlistForm() {
         evento. Lo vas a ver publicado acá mismo cuando esté disponible.
       </p>
 
-      {status === "success" ? (
+      {registered || status === "success" ? (
         <div className="waitlist-form__message waitlist-form__message--success">
           {message}
         </div>
@@ -182,6 +211,19 @@ export default function WaitlistForm() {
               value={formData.phone}
               onChange={handleChange}
               required
+            />
+          </div>
+
+          <div className="waitlist-form__honeypot" aria-hidden="true">
+            <label htmlFor="botField">No completar</label>
+            <input
+              type="text"
+              id="botField"
+              name="botField"
+              value={formData.botField}
+              onChange={handleChange}
+              tabIndex={-1}
+              autoComplete="off"
             />
           </div>
 
