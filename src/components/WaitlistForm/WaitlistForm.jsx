@@ -34,12 +34,13 @@ export default function WaitlistForm() {
     }
 
     try {
+      const { ...payload } = formData;
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -68,6 +69,10 @@ export default function WaitlistForm() {
   return (
     <div className="waitlist-form">
       <h2 className="waitlist-form__title">Lista de Espera</h2>
+      <p className="waitlist-form__subtitle">
+        Te estás registrando para acceder más rápido cuando se publique el
+        evento. Lo vas a ver publicado acá mismo cuando esté disponible.
+      </p>
 
       {status === "success" ? (
         <div className="waitlist-form__message waitlist-form__message--success">

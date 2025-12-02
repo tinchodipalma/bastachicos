@@ -15,7 +15,7 @@ export const metadata = {
   title: "Basta Chicos",
   description: "Basta Chicos, por Radio Sucesos.",
   icons: {
-    icon: "/sucesos.ico",
+    icon: "/bastachicos.ico",
   },
 };
 

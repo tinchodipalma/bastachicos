@@ -7,6 +7,26 @@
   justify-content: center;
   padding: 2rem 1rem;
   text-align: center;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(
+        circle at 20% 20%,
+        rgba($color-primary, 0.15),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgba($color-primary, 0.08),
+        transparent 35%
+      );
+    filter: blur(30px);
+    animation: heroGlow 12s ease-in-out infinite alternate;
+    z-index: 0;
+  }
 
   &__image {
     max-width: 100%;
@@ -14,6 +34,10 @@
     max-height: 300px; // Adjust as needed
     margin-bottom: 2rem;
     filter: drop-shadow(0 0 10px rgba($color-primary, 0.5));
+    animation: float 6s ease-in-out infinite,
+      pulseShadow 10s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
   }
 
   &__title {
@@ -21,5 +45,40 @@
     font-size: 2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+}
+
+@keyframes heroGlow {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseShadow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba($color-primary, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba($color-primary, 0.75));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba($color-primary, 0.4));
   }
 }
