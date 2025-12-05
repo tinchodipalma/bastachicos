@@ -1,6 +1,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --cta-gold-1: #fff3a0;
+  --cta-gold-2: #ffd24d;
+  --cta-gold-3: #ffb703;
+  --cta-shadow: rgba(255, 215, 0, 0.45);
+  --cta-shadow-strong: rgba(255, 215, 0, 0.6);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +27,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 * {
@@ -35,8 +41,177 @@ a {
   text-decoration: none;
 }
 
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, box-shadow 0.35s ease, background 0.35s ease,
+    filter 0.35s ease;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn--primary {
+  background: linear-gradient(
+    135deg,
+    var(--cta-gold-1) 0%,
+    var(--cta-gold-2) 45%,
+    var(--cta-gold-3) 100%
+  );
+  color: #0f0f0f;
+  box-shadow: 0 12px 28px var(--cta-shadow), 0 6px 12px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.btn--cta {
+  width: min(100%, 420px);
+  margin-inline: auto;
+  padding: 16px 36px;
+  border-radius: 999px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  background: linear-gradient(
+    120deg,
+    var(--cta-gold-1) 0%,
+    var(--cta-gold-2) 45%,
+    var(--cta-gold-3) 100%
+  );
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 14px 38px var(--cta-shadow), 0 10px 20px rgba(0, 0, 0, 0.35);
+  animation: pulseGlow 2.6s ease-in-out infinite;
+}
+
+.btn--cta::before {
+  content: "";
+  position: absolute;
+  inset: -30% -20%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.32),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.22),
+      transparent 35%
+    );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.btn--cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 5%,
+    rgba(255, 255, 255, 0.75) 50%,
+    rgba(255, 255, 255, 0) 95%
+  );
+  transform: translateX(-140%) skewX(-20deg);
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.btn--cta:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 42px var(--cta-shadow-strong),
+    0 12px 22px rgba(0, 0, 0, 0.4);
+}
+
+.btn--cta:hover::before {
+  opacity: 1;
+}
+
+.btn--cta:active {
+  transform: translateY(0);
+  box-shadow: 0 12px 28px var(--cta-shadow), 0 8px 16px rgba(0, 0, 0, 0.35);
+  animation-play-state: paused;
+}
+
+@media (max-width: 640px) {
+  .btn--cta {
+    width: min(100%, 360px);
+    padding: 15px 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    gap: 6px;
+  }
+
+  .btn--cta {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    border-radius: 22px;
+    box-shadow: 0 10px 26px var(--cta-shadow), 0 8px 16px rgba(0, 0, 0, 0.32);
+  }
+
+  .btn--cta:hover {
+    transform: translateY(-1px) scale(1.005);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(180%) skewX(-20deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 14px 32px var(--cta-shadow), 0 10px 18px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 18px 44px var(--cta-shadow-strong),
+      0 14px 24px rgba(0, 0, 0, 0.45);
+  }
+  100% {
+    box-shadow: 0 14px 32px var(--cta-shadow), 0 10px 18px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--cta {
+    animation: none;
+  }
+
+  .btn--cta::after {
+    animation: none;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+.Tincho {
+  position: relative;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.Tincho a {
+  position: relative;
+  z-index: 9999;
 }

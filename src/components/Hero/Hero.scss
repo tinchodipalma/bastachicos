@@ -10,6 +10,7 @@
   position: relative;
 
   &::after {
+    z-index: 0;
     content: "";
     position: absolute;
     inset: -30%;
